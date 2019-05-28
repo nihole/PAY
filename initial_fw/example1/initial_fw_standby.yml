@@ -1,0 +1,29 @@
+device:
+  mgt:
+    ipaddress: 10.10.10.5
+    mask: 255.255.255.224
+    hostname: hostname2
+    gw: 10.10.10.1
+
+panorama:
+  primary: 10.10.10.28
+  secondary: 10.10.10.29
+
+ha:
+  first:
+  second: yes
+  group: 2
+  heartbeat_backup: "yes"
+  interface:
+    ha1: ha1-a
+    ha1_ipaddress_active: 172.16.30.6
+    ha1_ipaddress_passive: 172.16.30.5
+    ha1_backup: ha1-b
+    ha1_backup_ipaddress_active: 172.16.30.10
+    ha1_backup_ipaddress_passive: 172.16.30.9
+    ha2: hsci
+    ha2_ipaddress_active: no
+    ha2_ipaddress_passive: no
+    ha2_backup: no
+    ha2_backup_ipaddress_active: no
+    ha2_backup_ipaddress_passive: no

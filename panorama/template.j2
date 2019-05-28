@@ -1,0 +1,37 @@
+configure
+{% for j in server_profile.snmp_trap%}
+{% for i in j.record%}
+set panorama log-settings snmptrap {{ j.name }}  version {{ j.version }}  server {{ i.name }}  manager {{ i.manager }}
+set panorama log-settings snmptrap {{ j.name }}  version {{ j.version }}  server {{ i.name }}  community {{ i.community }}
+{% endfor %}
+{% endfor %}
+
+{% for j in server_profile.syslog%}
+{% for i in j.record%}
+set panorama log-settings syslog {{ j.name }} server {{ i.name }} server {{ i.server }}
+{% endfor %}
+{% endfor %}
+
+{% for j in log_settings.system%}
+set panorama log-settings system match-list {{ j.name }} send-snmptrap {{ j.snmp_trap }}
+set panorama log-settings system match-list {{ j.name }} filter "{{ j.filter }}"
+set panorama log-settings system match-list {{ j.name }} send-syslog {{ j.syslog }}
+{% endfor %}
+
+{% for j in server_profile.tacacs%}
+set panorama server-profile tacplus tacacs_user-auth protocol {{ j.auth_prot }}
+{% for i in j.DC1%}
+set panorama server-profile tacplus {{ j.name }} server {{ i.name }} secret {{ i.secret }}
+set panorama server-profile tacplus tacacs_user-auth server {{ i.name }} port 49
+set panorama server-profile tacplus tacacs_user-auth server {{ i.name }} address {{ i.server }}
+{% endfor %}
+{% for i in j.DC2%}
+set panorama server-profile tacplus {{ j.name }} server {{ i.name }} secret {{ i.secret }}
+set panorama server-profile tacplus tacacs_user-auth server {{ i.name }} port 49
+set panorama server-profile tacplus tacacs_user-auth server {{ i.name }} address {{ i.server }}
+{% endfor %}
+{% endfor %}
+
+set panorama authentication-profile {{ auth_profile.name }} method tacplus server-profile {{ auth_profile.server }}
+set panorama authentication-profile tacacs_user-auth_pfl allow-list all
+

@@ -1,0 +1,15 @@
+configure
+set template template1 config  deviceconfig high-availability group 2 election-option heartbeat-backup 
+set template template1 config  deviceconfig high-availability group 2 election-option timers recommended
+set template template1 config  deviceconfig high-availability group 2 election-option heartbeat-backup yes
+set template template1 config  deviceconfig high-availability group 2 monitoring link-monitoring link-group ldg1 interface [ ethernet1/13 ethernet2/13  ]
+set template template1 config  deviceconfig high-availability group 2 monitoring link-monitoring enabled yes
+set template template1 config  deviceconfig high-availability group 2 monitoring path-monitoring enabled no
+set template template1 config  deviceconfig high-availability group 2 configuration-synchronization enabled yes
+set template template1 config  deviceconfig high-availability group 2 mode active-passive passive-link-state auto
+set template template1 config  deviceconfig high-availability group 2 state-synchronization ha2-keep-alive enabled yes
+set template template1 config  deviceconfig high-availability interface ha1 port ha1-a
+set template template1 config  deviceconfig high-availability interface ha1-backup port ha1-b
+set template template1 config  deviceconfig high-availability interface ha2 port hsci
+set template template1 config  deviceconfig high-availability enabled yes
+

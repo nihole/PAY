@@ -1,0 +1,18 @@
+template: template1
+dns:
+  primary: 10.100.100.100
+  secondary: 10.100.100.200
+ntp:
+  server1: ntp1.a.b
+  server2: ntp2.a.b
+panorama:
+  server1: 10.10.10.28
+  server2: 10.10.10.29
+snmp:
+  user: 
+  authpwd:
+  privpwd:
+  location:
+  contact:
+auth_profile:
+  name: tacacs_pfl

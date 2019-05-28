@@ -1,0 +1,92 @@
+template:  template1
+
+vsys:
+- name: vsys_1
+  rd:
+    name: vsys_1_vr
+    interface:
+    - name: ae1.1
+    - name: ae1.2
+    - name: ae1.3
+    local_as: 65000
+    router_id: 172.16.16.1
+    bgp_auth:
+    - name: BGP_PE_MD5
+      secret: "secret"
+    peer_group:
+    - name: peer-group-1
+      peer: 
+      - name: peer1_1
+        interface: ae1.1
+        peer_as: 65001
+        peer_ipaddress: 172.17.1.2
+        multihop: 0
+        auth: BGP_PE_MD5
+        bfd: yes
+      - name: peer1_2
+        interface: ae1.1
+        peer_as: 65001
+        peer_ipaddress: 172.17.1.3
+        multihop: 0
+        auth: BGP_PE_MD5
+        bfd: yes
+    - name: peer-group-2
+      peer:
+      - name: peer_2_1
+        interface: ae1.2
+        peer_as: 64502
+        peer_ipaddress: 172.17.2.2
+        multihop: 0
+        auth: BGP_PE_MD5
+        bfd: yes
+      - name: peer_2_2
+        interface: ae1.2
+        peer_as: 64502
+        peer_ipaddress: 172.17.2.3
+        multihop: 0
+        auth: BGP_PE_MD5
+        bfd: yes
+    - name: peer-group-3
+      peer:
+      - name: peer3_1
+        interface: ae1.3
+        peer_as: 64503
+        peer_ipaddress: 172.17.3.2
+        multihop: 0
+        auth:
+        bfd: yes
+      - name: peer3_2
+        interface: ae1.3
+        peer_as: 64503
+        peer_ipaddress: 172.17.3.3
+        multihop: 0
+        auth:
+        bfd: yes
+  rules:
+    import:
+      default:
+        user:
+        - name: peer-group-1
+      no_default:
+        user:
+        - name: peer-group-2
+        - name: peer-group-3  
+      permit_all:
+        user:
+        - name: peer-group-1
+        - name: peer-group-2
+        - name: peer-group-3
+    export:
+      default:
+        user:
+        - name: peer-group-2
+        - name: peer-group-3
+      no_default:
+        user:
+        - name: peer-group-1
+      permit_all:
+        user: 
+        - name: peer-group-1
+      deny_all:
+        user:
+

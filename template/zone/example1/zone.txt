@@ -1,0 +1,69 @@
+configure
+-------	ZONE PROTECTION PROFILE INTERNAL------
+----------------------------------------------
+set template test1 config  network profiles zone-protection-profile zp_2 flood tcp-syn enable yes
+set template test1 config  network profiles zone-protection-profile zp_2 flood tcp-syn syn-cookies alarm-rate 10000 activate-rate 10000 maximal-rate 1000000
+set template test1 config  network profiles zone-protection-profile zp_2 flood icmp enable yes
+set template test1 config  network profiles zone-protection-profile zp_2 flood icmp red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_2 flood icmpv6 enable yes
+set template test1 config  network profiles zone-protection-profile zp_2 flood icmpv6 red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_2 flood other-ip enable yes
+set template test1 config  network profiles zone-protection-profile zp_2 flood other-ip red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_2 flood udp enable yes
+set template test1 config  network profiles zone-protection-profile zp_2 flood udp red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_2 discard-malformed-option yes
+set template test1 config  network profiles zone-protection-profile zp_2 discard-overlapping-tcp-segment-mismatch yes
+set template test1 config  network profiles zone-protection-profile zp_2 remove-tcp-timestamp yes
+set template test1 config  network profiles zone-protection-profile zp_3 flood tcp-syn enable yes
+set template test1 config  network profiles zone-protection-profile zp_3 flood tcp-syn syn-cookies alarm-rate 10000 activate-rate 10000 maximal-rate 1000000
+set template test1 config  network profiles zone-protection-profile zp_3 flood icmp enable yes
+set template test1 config  network profiles zone-protection-profile zp_3 flood icmp red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_3 flood icmpv6 enable yes
+set template test1 config  network profiles zone-protection-profile zp_3 flood icmpv6 red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_3 flood other-ip enable yes
+set template test1 config  network profiles zone-protection-profile zp_3 flood other-ip red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_3 flood udp enable yes
+set template test1 config  network profiles zone-protection-profile zp_3 flood udp red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_3 discard-malformed-option yes
+set template test1 config  network profiles zone-protection-profile zp_3 discard-overlapping-tcp-segment-mismatch yes
+set template test1 config  network profiles zone-protection-profile zp_3 remove-tcp-timestamp yes
+------- ZONE PROTECTION PROFILE EXTERNAL ------
+----------------------------------------------
+set template test1 config  network profiles zone-protection-profile zp_1 flood tcp-syn enable yes
+set template test1 config  network profiles zone-protection-profile zp_1 flood tcp-syn syn-cookies alarm-rate 10000 activate-rate 10000 maximal-rate 1000000
+set template test1 config  network profiles zone-protection-profile zp_1 flood icmp enable yes
+set template test1 config  network profiles zone-protection-profile zp_1 flood icmp red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_1 flood icmpv6 enable yes
+set template test1 config  network profiles zone-protection-profile zp_1 flood icmpv6 red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_1 flood other-ip enable yes
+set template test1 config  network profiles zone-protection-profile zp_1 flood other-ip red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_1 flood udp enable yes
+set template test1 config  network profiles zone-protection-profile zp_1 flood udp red alarm-rate 10000 activate-rate 10000 maximal-rate 40000
+set template test1 config  network profiles zone-protection-profile zp_1 discard-malformed-option yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-overlapping-tcp-segment-mismatch yes
+set template test1 config  network profiles zone-protection-profile zp_1 remove-tcp-timestamp yes
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8001 action alert
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8001 interval 2
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8001 threshold 100
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8002 action alert
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8002 interval 10
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8002 threshold 100
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8003 action alert
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8003 interval 2
+set template test1 config  network profiles zone-protection-profile zp_1 scan 8003 threshold 100
+set template test1 config  network profiles zone-protection-profile zp_1 discard-strict-source-routing yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-security yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-loose-source-routing yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-stream-id yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-timestamp yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-unknown-option yes
+set template test1 config  network profiles zone-protection-profile zp_1 discard-record-route yes
+-------	ZONES -------------
+---------------------------
+set template test1 config  vsys vsys_1 zone zn_1 network zone-protection-profile zp_1
+set template test1 config  vsys vsys_1 zone zn_1 network layer3 [ ae1.1  ]
+set template test1 config  vsys vsys_1 zone zn_2 network zone-protection-profile zp_2
+set template test1 config  vsys vsys_1 zone zn_2 network layer3 [ ae1.2  ]
+set template test1 config  vsys vsys_1 zone zn_3 network zone-protection-profile zp_3
+set template test1 config  vsys vsys_1 zone zn_3 network layer3 [ ae1.3  ]
+

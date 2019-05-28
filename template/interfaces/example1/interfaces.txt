@@ -1,0 +1,30 @@
+configure
+set template template1 settings
+------   FOR PHYSICAL  ---------
+set template template1 config  network interface ethernet ethernet1/12 log-card ip-address 10.10.10.40
+set template template1 config  network interface ethernet ethernet1/12 log-card netmask 255.255.255.224
+set template template1 config  network interface ethernet ethernet1/12 log-card default-gateway 10.10.10.33
+set template template1 config  network interface ethernet ethernet1/13 aggregate-group ae1
+set template template1 config  network interface ethernet ethernet2/13 aggregate-group ae1
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lacp high-availability passive-pre-negotiation yes
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lacp transmission-rate fast
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lacp enable yes
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lacp fast-failover yes
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lacp mode active
+set template template1 config  network interface aggregate-ethernet ae1 layer3 ndp-proxy enabled no
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lldp enable yes
+set template template1 config  network interface aggregate-ethernet ae1 layer3 lldp high-availability passive-pre-negotiation yes
+set template template1 config  network interface aggregate-ethernet ae1 layer3 mtu 9000
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.1 ndp-proxy enabled no
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.1 ip 172.17.1.1/24
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.1 tag 1
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.1 mtu 9000
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.2 ndp-proxy enabled no
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.2 ip 172.17.2.1/24
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.2 tag 2
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.2 mtu 9000
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.3 ndp-proxy enabled no
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.3 ip 172.17.3.1/24
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.3 tag 3
+set template template1 config  network interface aggregate-ethernet ae1 layer3 units ae1.3 mtu 9000
+

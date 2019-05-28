@@ -1,0 +1,36 @@
+log_forwarding:
+  profile:
+  - name: snmp_server_lfp
+    record:
+    - name: threat_critical_log 
+      log_type: threat
+      filter: (severity eq critical)
+      snmp: snmp-trap
+      panorama: "no"
+    - name: threat_high_log 
+      log_type: threat
+      filter: (severity eq high)
+      snmp: snmp-trap
+      panorama: "no"
+    - name: threat_medium_log     
+      log_type: threat
+      filter: (severity eq medium)
+      snmp: snmp-trap
+      panorama: "no"
+  - name: panorama_lfp
+    record:
+    - name: traffic_log 
+      log_type: traffic
+      filter: All Logs
+      snmp: 
+      panorama: "yes"
+    - name: threat_log        
+      log_type: threat
+      filter: All Logs
+      snmp: 
+      panorama: "yes"
+    - name: df_log 
+      log_type: data
+      filter: All Logs
+      snmp:
+      panorama: "yes"

@@ -1,0 +1,48 @@
+template: template1
+server_profile:
+  snmp_trap:
+  - name: snmp-trap
+    version: v2c
+    record:
+    - name: a.b
+      manager: a.b
+      community: cisco123
+  syslog:
+  - name: syslog_servers
+    record:
+    - name: syslog1
+      server: syslog1.a.b
+    - name: syslog2
+      server: syslog2.a.b
+  tacacs:
+  - name: tacacs_auth
+    auth_prot: CHAP
+    DC1:
+    - name: tacacs1.a.b
+      server: tacacs1.a.b
+      secret: cisco123
+log_settings:
+  system:
+  - name: system_critical_log
+    filter: (severity eq critical)
+    snmp_trap: snmp-trap
+    syslog: syslog_servers
+    panorama: "yes"
+  - name: system_high_log
+    filter: (severity eq high)
+    snmp_trap: snmp-trap
+    syslog: syslog_servers
+    panorama: "yes"
+  - name: system_medium_log
+    filter: severity eq medium
+    snmp_trap: snmp-trap
+    syslog: syslog_servers
+    panorama: "yes"
+auth_profile:
+  name: tacacs_pfl
+  server: tacacs_auth
+user:
+- name: admin1
+  auth_profile: tacacs_pfl
+  superuser: "yes"
+

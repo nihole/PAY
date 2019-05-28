@@ -1,0 +1,22 @@
+primary: yes
+auth_profile:
+  tacacs: tacacs_pfl
+device:
+  - number: 010101010101
+  - number: 020202020202
+mgmt:
+  ipaddress: 10.10.10.28
+  mask: 255.255.255.224
+  hostname: hostname
+  gw: 10.10.10.1
+dns:
+  primary: 10.100.100.100
+  secondary: 10.100.100.200
+ntp:
+  server1: ntp1.a.b
+  server2: ntp2.a.b
+proxy:
+  ipaddress: 10.1.1.1
+  port: 8080
+ha:
+  peer: 10.10.10.29

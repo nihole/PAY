@@ -1,0 +1,39 @@
+configure
+
+set template {{ template }} config  deviceconfig system service disable-telnet yes
+set template {{ template }} config  deviceconfig system service disable-http yes
+set template {{ template }} config  deviceconfig system service disable-snmp no
+set template {{ template }} config  deviceconfig system service disable-userid-service no
+set template {{ template }} config  deviceconfig system update-server updates.paloaltonetworks.com
+set template {{ template }} config  deviceconfig setting jumbo-frame mtu 9192
+
+{% if ntp.server1 %}
+set template {{ template }} config  deviceconfig system ntp-servers primary-ntp-server ntp-server-address {{ ntp.server1 }}
+set template {{ template }} config  deviceconfig system ntp-servers secondary-ntp-server ntp-server-address {{ ntp.server2 }}
+set template {{ template }} config  deviceconfig system timezone Europe/Brussels
+{% endif %}
+
+{% if dns.primary %}
+set template {{ template }} config  deviceconfig system dns-setting servers primary {{ dns.primary }}
+set template {{ template }} config  deviceconfig system dns-setting servers secondary {{ dns.secondary }}
+{% endif %}
+
+{% if panorama.server1 %}
+set template {{ template }} config  deviceconfig system panorama-server {{ panorama.server1 }}
+set template {{ template }} config  deviceconfig system panorama-server-2 {{ panorama.server2 }}
+{% endif %}
+
+{% if snmp.user %}
+set template {{ template }} config  deviceconfig system snmp-setting access-setting version v3 views allview view all oid .1.3.6.1
+set template {{ template }} config  deviceconfig system snmp-setting access-setting version v3 views allview view all option include
+set template {{ template }} config  deviceconfig system snmp-setting access-setting version v3 views allview view all mask 0xf0
+set template {{ template }} config  deviceconfig system snmp-setting access-setting version v3 users {{ snmp.user }}  authpwd {{ snmp.authpwd }}
+set template {{ template }} config  deviceconfig system snmp-setting access-setting version v3 users {{ snmp.user }} privpwd {{ snmp.privpwd }}
+set template {{ template }} config  deviceconfig system snmp-setting access-setting version v3 users {{ snmp.user }} view allview
+set template {{ template }} config  deviceconfig system snmp-setting snmp-system location {{ snmp.location }}
+set template {{ template }} config  deviceconfig system snmp-setting snmp-system contact {{ snmp.contact }}
+{% endif %}
+
+{% if auth_profile.name%}
+set template {{ template }} config  deviceconfig system authentication-profile {{ auth_profile.name }}
+{% endif %}

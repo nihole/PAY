@@ -1,0 +1,58 @@
+configure
+
+set template {{ template }} settings
+
+{% if ha %}
+{% for j in ha%}
+set template {{ template }} config network interface ethernet {{ j.name }} ha
+{% endfor %}
+{% endif %}
+
+{% if physical %}
+------   FOR PHYSICAL  ---------
+{% if log_card.exist %}
+set template {{ template }} config  network interface ethernet {{ log_card.interface }} log-card ip-address {{ log_card.ipaddress }}
+set template {{ template }} config  network interface ethernet {{ log_card.interface }} log-card netmask {{ log_card.mask }}
+set template {{ template }} config  network interface ethernet {{ log_card.interface }} log-card default-gateway {{ log_card.gw }}
+{% endif %}
+
+
+{% for j in ae%}
+{% for i in j.interface%}
+set template {{ template }} config  network interface ethernet {{ i.name }} aggregate-group {{ j.name }}
+{% endfor %}
+{% endfor %}
+
+{% for j in ae%}
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lacp high-availability passive-pre-negotiation yes
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lacp transmission-rate fast
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lacp enable yes
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lacp fast-failover yes
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lacp mode active
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 ndp-proxy enabled no
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lldp enable yes
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 lldp high-availability passive-pre-negotiation yes
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 mtu 9000
+{% for i in j.subint%}
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} ndp-proxy enabled no
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} ip {{ i.ipaddress }}/{{ i.mask }}
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} tag {{ i.tag }}
+set template {{ template }} config  network interface aggregate-ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} mtu 9000
+{% endfor%}
+{% endfor%}
+{% endif %}
+
+{% if virtual %}
+------   FOR VIRTUAL ---------
+{% for j in interface%}
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 lldp enable yes
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 lldp high-availability passive-pre-negotiation yes
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 mtu 9000
+{% for i in j.subint%}
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} ndp-proxy enabled no
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} ip {{ i.ipaddress }}/{{ i.mask }}
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} tag {{ i.tag }}
+set template {{ template }} config  network interface ethernet {{ j.name }} layer3 units {{ j.name }}.{{ i.tag }} mtu 9000
+{% endfor%}
+{% endfor%}
+{% endif %}

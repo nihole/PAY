@@ -1,0 +1,21 @@
+configure
+set panorama log-settings snmptrap snmp-trap  version v2c  server a.b  manager a.b
+set panorama log-settings snmptrap snmp-trap  version v2c  server a.b  community cisco123
+set panorama log-settings syslog syslog_servers server syslog1 server syslog1.a.b
+set panorama log-settings syslog syslog_servers server syslog2 server syslog2.a.b
+set panorama log-settings system match-list system_critical_log send-snmptrap snmp-trap
+set panorama log-settings system match-list system_critical_log filter "(severity eq critical)"
+set panorama log-settings system match-list system_critical_log send-syslog syslog_servers
+set panorama log-settings system match-list system_high_log send-snmptrap snmp-trap
+set panorama log-settings system match-list system_high_log filter "(severity eq high)"
+set panorama log-settings system match-list system_high_log send-syslog syslog_servers
+set panorama log-settings system match-list system_medium_log send-snmptrap snmp-trap
+set panorama log-settings system match-list system_medium_log filter "severity eq medium"
+set panorama log-settings system match-list system_medium_log send-syslog syslog_servers
+set panorama server-profile tacplus tacacs_user-auth protocol CHAP
+set panorama server-profile tacplus tacacs_auth server tacacs1.a.b secret cisco123
+set panorama server-profile tacplus tacacs_user-auth server tacacs1.a.b port 49
+set panorama server-profile tacplus tacacs_user-auth server tacacs1.a.b address tacacs1.a.b
+set panorama authentication-profile tacacs_pfl method tacplus server-profile tacacs_auth
+set panorama authentication-profile tacacs_user-auth_pfl allow-list all
+

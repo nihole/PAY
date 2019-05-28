@@ -1,0 +1,23 @@
+template: test1
+zp_profile:
+  internal:
+  - name: zp_2
+  - name: zp_3
+  external:
+  - name: zp_1
+vsys:
+- name: vsys_1
+  zone:
+  - name: zn_1
+    zp_profile: zp_1
+    interface:
+    - name: ae1.1
+  - name: zn_2
+    zp_profile: zp_2
+    interface:
+    - name: ae1.2
+  - name: zn_3
+    zp_profile: zp_3
+    interface:
+    - name: ae1.3
+

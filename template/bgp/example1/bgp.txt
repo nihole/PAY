@@ -1,0 +1,136 @@
+configure
+set template template1 config  vsys vsys_1 import network virtual-router vsys_1_vr
+set template template1 config  vsys vsys_1 import network interface [ ae1.1  ae1.2  ae1.3 ]
+set template template1 config  network profiles bfd-profile bfd_300ms_np min-rx-interval 300
+set template template1 config  network profiles bfd-profile bfd_300ms_np min-tx-interval 300
+set template template1 config  network profiles bfd-profile bfd_300ms_np mode active
+set template template1 config  network virtual-router vsys_1_vr interface [ ae1.1  ae1.2  ae1.3 ]
+set template template1 config  network virtual-router vsys_1_vr ecmp algorithm ip-hash use-port yes
+set template template1 config  network virtual-router vsys_1_vr ecmp enable yes
+set template template1 config  network virtual-router vsys_1_vr ecmp symmetric-return yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp routing-options graceful-restart enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp routing-options graceful-restart stale-route-time 120
+set template template1 config  network virtual-router vsys_1_vr protocol bgp routing-options graceful-restart local-restart-time 120
+set template template1 config  network virtual-router vsys_1_vr protocol bgp routing-options graceful-restart max-peer-restart-time 120
+set template template1 config  network virtual-router vsys_1_vr protocol bgp routing-options med always-compare-med yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp router-id 172.16.16.1
+set template template1 config  network virtual-router vsys_1_vr protocol bgp local-as 65000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp global-bfd profile bfd_300ms_np
+set template template1 config  network virtual-router vsys_1_vr protocol bgp redist-rules 0.0.0.0/0 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp redist-rules 0.0.0.0/0 address-family-identifier ipv4
+set template template1 config  network virtual-router vsys_1_vr protocol bgp redist-rules 0.0.0.0/0 route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp redist-rules 0.0.0.0/0 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp redist-rules 0.0.0.0/0 set-origin incomplete
+set template template1 config  network virtual-router vsys_1_vr protocol bgp auth-profile BGP_PE_MD5 secret secret
+set template template1 config  network virtual-router vsys_1_vr protocol bgp reject-default-route no
+set template template1 config  network virtual-router vsys_1_vr protocol bgp ecmp-multi-as yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp allow-redist-default-route yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 type ebgp remove-private-as no
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 type ebgp import-nexthop original
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 type ebgp export-nexthop use-self
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 aggregated-confed-as-path yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 soft-reset-with-stored-info yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 local-address interface ae1.1
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 peer-address ip 172.17.1.2
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 bfd  profile Inherit-vr-global-setting
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 max-prefixes 5000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 peer-as 65001
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 connection-options multihop 0
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 connection-options authentication BGP_PE_MD5
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_1 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 local-address interface ae1.1
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 peer-address ip 172.17.1.3
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 bfd  profile Inherit-vr-global-setting
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 max-prefixes 5000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 peer-as 65001
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 connection-options multihop 0
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 connection-options authentication BGP_PE_MD5
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-1 peer peer1_2 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 type ebgp remove-private-as no
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 type ebgp import-nexthop original
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 type ebgp export-nexthop use-self
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 aggregated-confed-as-path yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 soft-reset-with-stored-info yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 local-address interface ae1.2
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 peer-address ip 172.17.2.2
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 bfd  profile Inherit-vr-global-setting
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 max-prefixes 5000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 peer-as 64502
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 connection-options multihop 0
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 connection-options authentication BGP_PE_MD5
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_1 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 local-address interface ae1.2
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 peer-address ip 172.17.2.3
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 bfd  profile Inherit-vr-global-setting
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 max-prefixes 5000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 peer-as 64502
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 connection-options multihop 0
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 connection-options authentication BGP_PE_MD5
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-2 peer peer_2_2 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 type ebgp remove-private-as no
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 type ebgp import-nexthop original
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 type ebgp export-nexthop use-self
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 aggregated-confed-as-path yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 soft-reset-with-stored-info yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 local-address interface ae1.3
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 peer-address ip 172.17.3.2
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 bfd  profile Inherit-vr-global-setting
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 max-prefixes 5000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 peer-as 64503
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 connection-options multihop 0
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_1 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 local-address interface ae1.3
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 peer-address ip 172.17.3.3
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 bfd  profile Inherit-vr-global-setting
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 max-prefixes 5000
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 peer-as 64503
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 connection-options multihop 0
+set template template1 config  network virtual-router vsys_1_vr protocol bgp peer-group peer-group-3 peer peer3_2 enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp install-route yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules no-default action deny
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules no-default match address-prefix 0.0.0.0/0 exact yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules no-default match route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules no-default enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules no-default used-by [ peer-group-2 peer-group-3  ]
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all action allow update community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all action allow update extended-community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all action allow update origin incomplete
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all action allow update as-path none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all match address-prefix 0.0.0.0/0 exact no
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all match route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules permit-all used-by [ peer-group-1 peer-group-2 peer-group-3  ]
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default action allow update as-path none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default action allow update community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default action allow update extended-community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default action allow update origin incomplete
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default match address-prefix 0.0.0.0/0 exact yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default match route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy import rules default used-by [ peer-group-1  ]
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default action allow update as-path none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default action allow update community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default action allow update extended-community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default action allow update origin incomplete
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default match address-prefix 0.0.0.0/0 exact yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default match route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules default used-by [ peer-group-2 peer-group-3  ]
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules no-default action deny
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules no-default match address-prefix 0.0.0.0/0 exact yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules no-default match route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules no-default enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules no-default used-by [ peer-group-1  ]
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all action allow update as-path none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all action allow update community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all action allow update extended-community none
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all action allow update origin incomplete
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all match address-prefix 0.0.0.0/0 exact no
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all match route-table unicast
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all enable yes
+set template template1 config  network virtual-router vsys_1_vr protocol bgp policy export rules permit-all used-by [ peer-group-1  ]
+

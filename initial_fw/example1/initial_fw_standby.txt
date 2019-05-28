@@ -1,0 +1,25 @@
+configure
+set deviceconfig system ip-address 10.10.10.5
+set deviceconfig system netmask 255.255.255.224
+set deviceconfig system hostname hostname2
+set deviceconfig system default-gateway 10.10.10.1
+set deviceconfig system panorama-server 10.10.10.28
+set deviceconfig system panorama-server-2 10.10.10.29
+set deviceconfig setting jumbo-frame mtu 9192
+set deviceconfig high-availability enabled yes
+set deviceconfig high-availability group 2 election-option heartbeat-backup yes
+set deviceconfig high-availability group 2 election-option timers recommended
+set deviceconfig high-availability group 2 election-option preemptive no
+set deviceconfig high-availability group 2 configuration-synchronization enabled yes
+set deviceconfig high-availability group 2 mode active-passive passive-link-state auto
+set deviceconfig high-availability group 2 state-synchronization ha2-keep-alive enabled yes
+set deviceconfig high-availability interface ha1 port ha1-a
+set deviceconfig high-availability interface ha1-backup port ha1-b
+set deviceconfig high-availability interface ha2 port hsci
+set deviceconfig high-availability group 2 peer-ip 172.16.30.5
+set deviceconfig high-availability interface ha1 ip-address 172.16.30.6
+set deviceconfig high-availability interface ha1 netmask 255.255.255.252
+set deviceconfig high-availability group 2 peer-ip-backup 172.16.30.9
+set deviceconfig high-availability interface ha1-backup ip-address 172.16.30.10
+set deviceconfig high-availability interface ha1-backup netmask 255.255.255.252
+

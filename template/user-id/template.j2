@@ -1,0 +1,9 @@
+
+{% for j in vsys%}
+{% for i in j.agent %}
+set template {{ template }} config  vsys {{ j.name }} user-id-agent {{ i.name }}  host-port port {{ i.port }}
+set template {{ template }} config  vsys {{ j.name }} user-id-agent {{ i.name }} host-port collectorname {{ i.collector }}
+set template {{ template }} config  vsys {{ j.name }} user-id-agent {{ i.name }} host-port host {{ i.host }}
+set template {{ template }} config  vsys {{ j.name }} user-id-agent {{ i.name }} host-port secret {{ i.secret }}
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,5 @@
+set template template1 config  vsys vsys_1 user-id-agent name  host-port port 5050
+set template template1 config  vsys vsys_1 user-id-agent name host-port collectorname Collector
+set template template1 config  vsys vsys_1 user-id-agent name host-port host 1.1.1.1
+set template template1 config  vsys vsys_1 user-id-agent name host-port secret cisco123
+

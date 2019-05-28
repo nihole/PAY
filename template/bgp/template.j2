@@ -1,0 +1,130 @@
+configure
+{% for j in vsys%}
+set template {{ template }} config  vsys {{ j.name }} import network virtual-router {{ j.rd.name }}
+set template {{ template }} config  vsys {{ j.name }} import network interface [{% for l in j.rd.interface%} {{ l.name }} {% endfor%}]
+
+set template {{ template }} config  network profiles bfd-profile bfd_300ms_np min-rx-interval 300
+set template {{ template }} config  network profiles bfd-profile bfd_300ms_np min-tx-interval 300
+set template {{ template }} config  network profiles bfd-profile bfd_300ms_np mode active
+
+
+set template {{ template }} config  network virtual-router {{ j.rd.name }} interface [{% for l in j.rd.interface%} {{ l.name }} {% endfor%}]
+set template {{ template }} config  network virtual-router {{ j.rd.name }} ecmp algorithm ip-hash use-port yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} ecmp enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} ecmp symmetric-return yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp routing-options graceful-restart enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp routing-options graceful-restart stale-route-time 120
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp routing-options graceful-restart local-restart-time 120
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp routing-options graceful-restart max-peer-restart-time 120
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp routing-options med always-compare-med yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp router-id {{ j.rd.router_id }}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp local-as {{ j.rd.local_as }}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp global-bfd profile bfd_300ms_np
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp redist-rules 0.0.0.0/0 enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp redist-rules 0.0.0.0/0 address-family-identifier ipv4
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp redist-rules 0.0.0.0/0 route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp redist-rules 0.0.0.0/0 enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp redist-rules 0.0.0.0/0 set-origin incomplete
+{% for i in j.rd.bgp_auth%}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp auth-profile {{ i.name }} secret {{ i.secret }}
+{% endfor %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp reject-default-route no
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp ecmp-multi-as yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp allow-redist-default-route yes
+
+
+
+{% for i in j.rd.peer_group%}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} type ebgp remove-private-as no
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} type ebgp import-nexthop original
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} type ebgp export-nexthop use-self
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} aggregated-confed-as-path yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} soft-reset-with-stored-info yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} enable yes
+
+{% for k in i.peer%}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} local-address interface {{ k.interface }}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} peer-address ip {{ k.peer_ipaddress }}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} bfd {% if k.bfd%} profile Inherit-vr-global-setting{% else%} profile None{%endif%}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} max-prefixes 5000
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} peer-as {{ k.peer_as }}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} connection-options multihop {{ k.multihop }}
+{% if k.auth %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} connection-options authentication {{ k.auth }}
+{% endif %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp peer-group {{ i.name }} peer {{ k.name }} enable yes
+{% endfor %}
+{% endfor %}
+
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp install-route yes
+
+
+{% if j.rules.import.no_default.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules no-default action deny
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules no-default match address-prefix 0.0.0.0/0 exact yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules no-default match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules no-default enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules no-default used-by [ {% for l in j.rules.import.no_default.user%}{{ l.name }} {% endfor%} ]
+{% endif %}
+
+{% if j.rules.import.permit_all.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all action allow update community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all action allow update extended-community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all action allow update origin incomplete
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all action allow update as-path none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all match address-prefix 0.0.0.0/0 exact no
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules permit-all used-by [ {% for l in j.rules.import.permit_all.user%}{{ l.name }} {% endfor%} ]
+{% endif %}
+
+{% if j.rules.import.default.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default action allow update as-path none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default action allow update community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default action allow update extended-community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default action allow update origin incomplete
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default match address-prefix 0.0.0.0/0 exact yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy import rules default used-by [ {% for l in j.rules.import.default.user%}{{ l.name }} {% endfor%} ]
+{% endif %}
+
+{% if j.rules.export.default.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default action allow update as-path none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default action allow update community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default action allow update extended-community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default action allow update origin incomplete
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default match address-prefix 0.0.0.0/0 exact yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules default used-by [ {% for l in j.rules.export.default.user%}{{ l.name }} {% endfor%} ]
+{% endif %}
+
+{% if j.rules.export.no_default.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules no-default action deny
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules no-default match address-prefix 0.0.0.0/0 exact yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules no-default match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules no-default enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules no-default used-by [ {% for l in j.rules.export.no_default.user%}{{ l.name }} {%endfor%} ]
+{% endif %}
+
+{% if j.rules.export.permit_all.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all action allow update as-path none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all action allow update community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all action allow update extended-community none
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all action allow update origin incomplete
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all match address-prefix 0.0.0.0/0 exact no
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules permit-all used-by [ {% for l in j.rules.export.permit_all.user%}{{ l.name }} {%endfor%} ]
+{% endif %}
+
+{% if j.rules.export.deny_all.user %}
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules deny-all action deny
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules deny-all match address-prefix 0.0.0.0/0 exact no
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules deny-all match route-table unicast
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules deny-all enable yes
+set template {{ template }} config  network virtual-router {{ j.rd.name }} protocol bgp policy export rules deny-all used-by [ {% for l in j.rules.export.deny_all.user%}{{ l.name }} {% endfor%} ]
+{% endif %}
+{% endfor%}

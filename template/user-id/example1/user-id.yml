@@ -1,0 +1,10 @@
+template: template1
+vsys:
+- name: vsys_1
+  agent:
+  - name: name
+    port: 5050
+    collector: Collector
+    host: 1.1.1.1
+    secret: cisco123
+

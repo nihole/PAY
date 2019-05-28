@@ -1,0 +1,13 @@
+template: template1
+group: 2
+link_group:
+- name: ldg1
+  interface:
+  - name: ethernet1/13
+  - name: ethernet2/13
+ha_interface:
+  heartbeat_backup: "yes"
+  ha1: ha1-a
+  ha1_backup: ha1-b
+  ha2: hsci
+  ha2_backup:

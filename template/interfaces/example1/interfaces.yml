@@ -1,0 +1,28 @@
+template: template1
+physical: yes
+
+log_card:
+  exist: yes
+  interface: ethernet1/12
+  ipaddress: 10.10.10.40
+  mask: 255.255.255.224
+  gw: 10.10.10.33
+
+virtual:
+
+ae:
+- name: ae1
+  interface:
+  - name: ethernet1/13
+  - name: ethernet2/13  
+  subint:
+  - tag: 1
+    ipaddress: 172.17.1.1
+    mask: 24
+  - tag: 2
+    ipaddress: 172.17.2.1
+    mask: 24
+  - tag: 3
+    ipaddress: 172.17.3.1
+    mask: 24
+

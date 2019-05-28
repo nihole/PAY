@@ -1,0 +1,50 @@
+configure
+set deviceconfig system authentication-profile tacacs_pfl
+set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily action download-and-install devices [ 1090785345 2181570690  ]
+set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily disable-new-content no
+set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily at 04:00
+set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily disable-new-content no
+set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily at 05:00
+set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily action download-and-install devices [ 1090785345 2181570690  ]
+set deviceconfig system deployment-update-schedule Antivirus_dynamic_update anti-virus recurring hourly action download-and-install devices [ 1090785345 2181570690  ]
+set deviceconfig system deployment-update-schedule Antivirus_dynamic_update anti-virus recurring hourly at 30
+set deviceconfig system ip-address 10.10.10.28
+set deviceconfig system netmask 255.255.255.224
+set deviceconfig system update-server updates.paloaltonetworks.com
+set deviceconfig system update-schedule threats recurring sync-to-peer yes
+set deviceconfig system update-schedule threats recurring daily at 00:45
+set deviceconfig system update-schedule threats recurring daily disable-new-content yes
+set deviceconfig system update-schedule threats recurring daily action download-and-install
+set deviceconfig system update-schedule anti-virus recurring hourly at 0
+set deviceconfig system update-schedule anti-virus recurring hourly action download-and-install
+set deviceconfig system update-schedule anti-virus recurring sync-to-peer yes
+set deviceconfig system timezone Europe/Brussels
+set deviceconfig system service disable-telnet yes
+set deviceconfig system service disable-http yes
+set deviceconfig system service disable-ssh no
+set deviceconfig system service disable-https no
+set deviceconfig system hostname hostname
+set deviceconfig system default-gateway 10.10.10.1
+set deviceconfig system dns-setting servers primary 10.100.100.100
+set deviceconfig system dns-setting servers secondary 10.100.100.200
+set deviceconfig system ntp-servers primary-ntp-server ntp-server-address ntp1.a.b
+set deviceconfig system ntp-servers primary-ntp-server authentication-type none
+set deviceconfig system ntp-servers secondary-ntp-server ntp-server-address ntp2.a.b
+set deviceconfig system ntp-servers secondary-ntp-server authentication-type none
+set deviceconfig system secure-proxy-server 10.1.1.1
+set deviceconfig system secure-proxy-port 8080
+set deviceconfig high-availability peer encryption enabled yes
+set deviceconfig high-availability peer ip-address 10.10.11.28
+set deviceconfig high-availability enabled yes
+set deviceconfig high-availability secure-conn-client check-server-identity no
+set deviceconfig high-availability election-option priority primary
+set deviceconfig high-availability election-option timers recommended
+set deviceconfig high-availability path-monitoring enabled yes
+set deviceconfig high-availability path-monitoring path-group mgmt_default destination-ip 10.10.10.1
+set mgt-config devices [ 1090785345 2181570690  ]
+set mgt-config users admin permissions role-based superuser yes
+set mgt-config users admin2 permissions role-based superuser yes
+set mgt-config users admin3 permissions role-based superreader yes
+set mgt-config users admin3 authentication-profile tacacs_pfl
+set mgt-config users testuser permissions role-based superuser yes
+set mgt-config users testuser authentication-profile tacacs_pfl

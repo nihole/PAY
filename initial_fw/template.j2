@@ -1,0 +1,37 @@
+configure
+set deviceconfig system ip-address {{ device.mgt.ipaddress }}
+set deviceconfig system netmask {{ device.mgt.mask }}
+set deviceconfig system hostname {{ device.mgt.hostname }}
+set deviceconfig system default-gateway {{ device.mgt.gw }}
+set deviceconfig system panorama-server {{ panorama.primary }}
+set deviceconfig system panorama-server-2 {{ panorama.secondary }}
+set deviceconfig setting jumbo-frame mtu 9192
+
+{% if ha %}
+set deviceconfig high-availability enabled yes
+set deviceconfig high-availability group {{ ha.group }} election-option heartbeat-backup {{ ha.heartbeat_backup }}
+set deviceconfig high-availability group {{ ha.group }} election-option timers recommended
+set deviceconfig high-availability group {{ ha.group }} election-option preemptive no
+set deviceconfig high-availability group {{ ha.group }} configuration-synchronization enabled yes
+set deviceconfig high-availability group {{ ha.group }} mode active-passive passive-link-state auto
+set deviceconfig high-availability group {{ ha.group }} state-synchronization ha2-keep-alive enabled yes
+set deviceconfig high-availability interface ha1 port {{ ha.interface.ha1 }}
+set deviceconfig high-availability interface ha1-backup port {{ ha.interface.ha1_backup }}
+set deviceconfig high-availability interface ha2 port {{ ha.interface.ha2 }}
+
+{% if ha.interface.ha1_ipaddress_passive %}
+set deviceconfig high-availability group {{ ha.group }} peer-ip {{ ha.interface.ha1_ipaddress_passive }}
+set deviceconfig high-availability interface ha1 ip-address {{ ha.interface.ha1_ipaddress_active }}
+set deviceconfig high-availability interface ha1 netmask 255.255.255.252
+{% endif %}
+
+{% if ha.interface.ha1_backup_ipaddress_passive %}
+set deviceconfig high-availability group {{ ha.group }} peer-ip-backup {{ ha.interface.ha1_backup_ipaddress_passive }}
+set deviceconfig high-availability interface ha1-backup ip-address {{ ha.interface.ha1_backup_ipaddress_active }}
+set deviceconfig high-availability interface ha1-backup netmask 255.255.255.252
+{% endif %}
+
+{% if ha.interface.ha2_backup%}
+set deviceconfig high-availability interface ha2-backup port {{ ha.interface.ha2_backup }}
+{% endif%}
+{% endif %}

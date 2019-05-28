@@ -1,0 +1,16 @@
+configure
+set template template1 config  deviceconfig system service disable-telnet yes
+set template template1 config  deviceconfig system service disable-http yes
+set template template1 config  deviceconfig system service disable-snmp no
+set template template1 config  deviceconfig system service disable-userid-service no
+set template template1 config  deviceconfig system update-server updates.paloaltonetworks.com
+set template template1 config  deviceconfig setting jumbo-frame mtu 9192
+set template template1 config  deviceconfig system ntp-servers primary-ntp-server ntp-server-address ntp1.a.b
+set template template1 config  deviceconfig system ntp-servers secondary-ntp-server ntp-server-address ntp2.a.b
+set template template1 config  deviceconfig system timezone Europe/Brussels
+set template template1 config  deviceconfig system dns-setting servers primary 10.100.100.100
+set template template1 config  deviceconfig system dns-setting servers secondary 10.100.100.200
+set template template1 config  deviceconfig system panorama-server 10.10.10.28
+set template template1 config  deviceconfig system panorama-server-2 10.10.10.29
+set template template1 config  deviceconfig system authentication-profile tacacs_pfl
+

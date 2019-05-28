@@ -1,0 +1,27 @@
+configure
+set template template1 config shared log-settings snmptrap snmp-trap  version v2c  server a.b  manager a.b
+set template template1 config shared log-settings snmptrap snmp-trap  version v2c  server a.b  community cisco123
+set template template1 config shared log-settings syslog syslog_servers server syslog1 server syslog1.a.b
+set template template1 config shared log-settings syslog syslog_servers server syslog2 server syslog2.a.b
+set template template1 config shared log-settings system match-list system_critical_log send-snmptrap snmp-trap
+set template template1 config shared log-settings system match-list system_critical_log filter "(severity eq critical)"
+set template template1 config shared log-settings system match-list system_critical_log send-syslog syslog_servers
+set template template1 config shared log-settings system match-list system_critical_log send-to-panorama yes
+set template template1 config shared log-settings system match-list system_high_log send-snmptrap snmp-trap
+set template template1 config shared log-settings system match-list system_high_log filter "(severity eq high)"
+set template template1 config shared log-settings system match-list system_high_log send-syslog syslog_servers
+set template template1 config shared log-settings system match-list system_high_log send-to-panorama yes
+set template template1 config shared log-settings system match-list system_medium_log send-snmptrap snmp-trap
+set template template1 config shared log-settings system match-list system_medium_log filter "severity eq medium"
+set template template1 config shared log-settings system match-list system_medium_log send-syslog syslog_servers
+set template template1 config shared log-settings system match-list system_medium_log send-to-panorama yes
+set template template1 config shared server-profile tacplus tacacs_auth protocol CHAP
+set template template1 config shared server-profile tacplus tacacs_auth server tacacs1.a.b secret cisco123
+set template template1 config shared server-profile tacplus tacacs_auth server tacacs1.a.b port 49
+set template template1 config shared server-profile tacplus tacacs_auth server tacacs1.a.b address tacacs1.a.b
+set template template1 config shared authentication-profile tacacs_pfl method tacplus server-profile tacacs_auth
+set template template1 config shared authentication-profile tacacs_pfl allow-list all
+------ mgmt section -----
+set template template1 config mgt-config users admin1 permissions role-based superuser yes
+set template template1 config mgt-config users admin1 authentication-profile tacacs_pfl
+

@@ -1,0 +1,55 @@
+configure
+{% for j in server_profile.snmp_trap%}
+{% if j.name %}
+{% for i in j.record%}
+set template {{ template }} config shared log-settings snmptrap {{ j.name }}  version {{ j.version }}  server {{ i.name }}  manager {{ i.manager }}
+set template {{ template }} config shared log-settings snmptrap {{ j.name }}  version {{ j.version }}  server {{ i.name }}  community {{ i.community }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+{% for j in server_profile.syslog%}
+{% if j.name %}
+{% for i in j.record%}
+set template {{ template }} config shared log-settings syslog {{ j.name }} server {{ i.name }} server {{ i.server }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+{% for j in log_settings.system%}
+{% if j.name %}
+set template {{ template }} config shared log-settings system match-list {{ j.name }} send-snmptrap {{ j.snmp_trap }}
+set template {{ template }} config shared log-settings system match-list {{ j.name }} filter "{{ j.filter }}"
+set template {{ template }} config shared log-settings system match-list {{ j.name }} send-syslog {{ j.syslog }}
+set template {{ template }} config shared log-settings system match-list {{ j.name }} send-to-panorama {{ j.panorama }}
+{% endif%}
+{% endfor %}
+
+{% for j in server_profile.tacacs%}
+{% if j.name %}
+set template {{ template }} config shared server-profile tacplus {{ j.name }} protocol {{ j.auth_prot }}
+{% for i in j.DC1%}
+set template {{ template }} config shared server-profile tacplus {{ j.name }} server {{ i.name }} secret {{ i.secret }}
+set template {{ template }} config shared server-profile tacplus {{ j.name }} server {{ i.name }} port 49
+set template {{ template }} config shared server-profile tacplus {{ j.name }} server {{ i.name }} address {{ i.server }}
+{% endfor %}
+{% for i in j.DC2%}
+set template {{ template }} config shared server-profile tacplus {{ j.name }} server {{ i.name }} secret {{ i.secret }}
+set template {{ template }} config shared server-profile tacplus {{ j.name }} server {{ i.name }} port 49
+set template {{ template }} config shared server-profile tacplus {{ j.name }} server {{ i.name }} address {{ i.server }}
+{% endfor %}
+{% endif%}
+{% endfor %}
+
+{% if auth_profile.name %}
+set template {{ template }} config shared authentication-profile {{ auth_profile.name }} method tacplus server-profile {{ auth_profile.server }}
+set template {{ template }} config shared authentication-profile {{ auth_profile.name }} allow-list all
+{% endif%}
+
+------ mgmt section -----
+{% if user %}
+{% for j in user %}
+set template {{ template }} config mgt-config users {{ j.name }} permissions role-based superuser {{ j.superuser }}
+set template {{ template }} config mgt-config users {{ j.name }} authentication-profile {{ j.auth_profile }}
+{% endfor %}
+{% endif %}

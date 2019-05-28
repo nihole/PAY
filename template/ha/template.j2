@@ -1,0 +1,17 @@
+configure
+set template {{ template }} config  deviceconfig high-availability group {{ group }} election-option heartbeat-backup {{ heartbeat_backup }}
+set template {{ template }} config  deviceconfig high-availability group {{ group }} election-option timers recommended
+set template {{ template }} config  deviceconfig high-availability group {{ group }} election-option heartbeat-backup yes
+{% for j in link_group%}
+set template {{ template }} config  deviceconfig high-availability group {{ group }} monitoring link-monitoring link-group {{ j.name }} interface [ {%for i in j.interface%}{{ i.name }} {% endfor%} ]
+{% endfor%}
+set template {{ template }} config  deviceconfig high-availability group {{ group }} monitoring link-monitoring enabled yes
+set template {{ template }} config  deviceconfig high-availability group {{ group }} monitoring path-monitoring enabled no
+set template {{ template }} config  deviceconfig high-availability group {{ group }} configuration-synchronization enabled yes
+set template {{ template }} config  deviceconfig high-availability group {{ group }} mode active-passive passive-link-state auto
+set template {{ template }} config  deviceconfig high-availability group {{ group }} state-synchronization ha2-keep-alive enabled yes
+set template {{ template }} config  deviceconfig high-availability interface ha1 port {{ ha_interface.ha1 }}
+set template {{ template }} config  deviceconfig high-availability interface ha1-backup port {{ ha_interface.ha1_backup }}
+set template {{ template }} config  deviceconfig high-availability interface ha2 port {{ ha_interface.ha2 }}
+set template {{ template }} config  deviceconfig high-availability enabled yes
+
