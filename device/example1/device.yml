@@ -2,8 +2,8 @@ primary: yes
 auth_profile:
   tacacs: tacacs_pfl
 device:
-  - number: 010101010101
-  - number: 020202020202
+  - number: "010101010101"
+  - number: "020202020202"
 mgmt:
   ipaddress: 10.10.10.28
   mask: 255.255.255.224
