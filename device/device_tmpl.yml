@@ -1,0 +1,22 @@
+primary: yes
+auth_profile:
+  tacacs: ""
+device:
+  - number: ""
+  - number: ""
+mgmt:
+  ipaddress: ""
+  mask:
+  hostname: ""
+  gw: ""
+dns:
+  primary: ""
+  secondary: ""
+ntp:
+  server1: ""
+  server2: ""
+proxy:
+  ipaddress: ""
+  port: 8080
+ha:
+  peer: ""
