@@ -1,5 +1,5 @@
 # PAY
-PAY = deploymen <b>P</b>alo <b>A</b>lto from <b>Y</b>aml = Palo Alto from Yaml
+PAY = deployment <b>P</b>alo <b>A</b>lto from <b>Y</b>aml = Palo Alto from Yaml
 
 PAY is rather the name of the approach, than the name of the software product.
 
