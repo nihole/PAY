@@ -1,0 +1,29 @@
+device:
+  mgt:
+    ipaddress: ""
+    mask: ""
+    hostname: ""
+    gw: ""
+
+panorama:
+  primary: ""
+  secondary: ""
+
+ha:
+  first: ""
+  second:
+  group: 
+  heartbeat_backup: ""
+  interface:
+    ha1: 
+    ha1_ipaddress_active: ""
+    ha1_ipaddress_passive: ""
+    ha1_backup: ""
+    ha1_backup_ipaddress_active: ""
+    ha1_backup_ipaddress_passive: ""
+    ha2: ""
+    ha2_ipaddress_active: ""
+    ha2_ipaddress_passive: ""
+    ha2_backup: ""
+    ha2_backup_ipaddress_active: ""
+    ha2_backup_ipaddress_passive: ""
