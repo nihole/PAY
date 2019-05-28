@@ -1,0 +1,30 @@
+server_profile:
+  snmp_trap:
+  - name: ""
+    version: ""
+    record:
+    - name: ""
+      manager: ""
+      community: ""
+  syslog:
+  - name: ""
+    record:
+    - name: ""
+      server: ""
+  tacacs:
+  - name: ""
+    auth_prot: ""
+    DC1:
+    - name: ""
+      server: ""
+      secret: ""
+log_settings:
+  system:
+  - name: ""
+    filter: ""
+    snmp_trap: ""
+    syslog: ""
+    panorama: ""
+auth_profile:
+  name: ""
+  server: ""

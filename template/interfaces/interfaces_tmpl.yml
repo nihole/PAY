@@ -1,0 +1,21 @@
+template: ""
+physical: ""
+
+log_card:
+  exist: ""
+  interface: ""
+  ipaddress: ""
+  mask: ""
+  gw: ""
+
+virtual:
+
+ae:
+- name: ""
+  interface:
+  - name: ethernet1/13
+  subint:
+  - tag: 
+    ipaddress: ""
+    mask: 
+

@@ -1,0 +1,9 @@
+log_forwarding:
+  profile:
+  - name: ""
+    record:
+    - name: ""
+      log_type: ""
+      filter: ""
+      snmp: ""
+      panorama: ""

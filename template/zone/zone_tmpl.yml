@@ -1,0 +1,13 @@
+template: ""
+zp_profile:
+  internal:
+  - name: ""
+  external:
+  - name: ""
+vsys:
+- name: ""
+  zone:
+  - name: ""
+    zp_profile: ""
+    interface:
+    - name: ""

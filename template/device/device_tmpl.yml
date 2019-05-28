@@ -1,0 +1,18 @@
+template: ""
+dns:
+  primary: ""
+  secondary: ""
+ntp:
+  server1: ""
+  server2: ""
+panorama:
+  server1: ""
+  server2: ""
+snmp:
+  user: ""
+  authpwd: ""
+  privpwd: ""
+  location: ""
+  contact: ""
+auth_profile:
+  name: ""

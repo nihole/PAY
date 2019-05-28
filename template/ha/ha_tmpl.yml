@@ -1,0 +1,13 @@
+template: ""
+group: 
+link_group:
+- name: ""
+  interface:
+  - name: ""
+  - name: ""
+ha_interface:
+  heartbeat_backup: ""
+  ha1: ""
+  ha1_backup: ""
+  ha2: ""
+  ha2_backup: ""

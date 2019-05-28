@@ -1,4 +1,4 @@
-template: test1
+template: template1
 zp_profile:
   internal:
   - name: zp_2

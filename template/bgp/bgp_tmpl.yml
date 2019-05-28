@@ -1,0 +1,23 @@
+template:  template1
+
+vsys:
+- name: ""
+  rd:
+    name: ""
+    interface:
+    - name: ""
+    local_as: ""
+    router_id: ""
+    bgp_auth:
+    - name: ""
+      secret: ""
+    peer_group:
+    - name: ""
+      peer: 
+      - name: ""
+        interface: ""
+        peer_as:
+        peer_ipaddress: ""
+        multihop: 
+        auth: ""
+        bfd: ""

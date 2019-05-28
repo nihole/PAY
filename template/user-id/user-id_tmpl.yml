@@ -1,0 +1,10 @@
+template: ""
+vsys:
+- name: ""
+  agent:
+  - name: ""
+    port: 
+    collector: ""
+    host: ""
+    secret: ""
+

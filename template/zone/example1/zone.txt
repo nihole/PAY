@@ -5,10 +5,10 @@ configure
 ----------------------------------------------
 -------	ZONES -------------
 ---------------------------
-set template test1 config  vsys vsys_1 zone zn_1 network zone-protection-profile zp_1
-set template test1 config  vsys vsys_1 zone zn_1 network layer3 [ ae1.1  ]
-set template test1 config  vsys vsys_1 zone zn_2 network zone-protection-profile zp_2
-set template test1 config  vsys vsys_1 zone zn_2 network layer3 [ ae1.2  ]
-set template test1 config  vsys vsys_1 zone zn_3 network zone-protection-profile zp_3
-set template test1 config  vsys vsys_1 zone zn_3 network layer3 [ ae1.3  ]
+set template template1 config  vsys vsys_1 zone zn_1 network zone-protection-profile zp_1
+set template template1 config  vsys vsys_1 zone zn_1 network layer3 [ ae1.1  ]
+set template template1 config  vsys vsys_1 zone zn_2 network zone-protection-profile zp_2
+set template template1 config  vsys vsys_1 zone zn_2 network layer3 [ ae1.2  ]
+set template template1 config  vsys vsys_1 zone zn_3 network zone-protection-profile zp_3
+set template template1 config  vsys vsys_1 zone zn_3 network layer3 [ ae1.3  ]
 
