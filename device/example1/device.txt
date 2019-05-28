@@ -2,9 +2,9 @@ configure
 set deviceconfig system authentication-profile tacacs_pfl
 set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily action download-and-install devices [ 1090785345 2181570690  ]
 set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily disable-new-content no
-set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily at 04:00
+set deviceconfig system deployment-update-schedule app_dynamic_update app recurring daily at 10:00
 set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily disable-new-content no
-set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily at 05:00
+set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily at 10:00
 set deviceconfig system deployment-update-schedule Thread_dynamic_update app-and-threat recurring daily action download-and-install devices [ 1090785345 2181570690  ]
 set deviceconfig system deployment-update-schedule Antivirus_dynamic_update anti-virus recurring hourly action download-and-install devices [ 1090785345 2181570690  ]
 set deviceconfig system deployment-update-schedule Antivirus_dynamic_update anti-virus recurring hourly at 30
@@ -12,7 +12,7 @@ set deviceconfig system ip-address 10.10.10.28
 set deviceconfig system netmask 255.255.255.224
 set deviceconfig system update-server updates.paloaltonetworks.com
 set deviceconfig system update-schedule threats recurring sync-to-peer yes
-set deviceconfig system update-schedule threats recurring daily at 00:45
+set deviceconfig system update-schedule threats recurring daily at 10:45
 set deviceconfig system update-schedule threats recurring daily disable-new-content yes
 set deviceconfig system update-schedule threats recurring daily action download-and-install
 set deviceconfig system update-schedule anti-virus recurring hourly at 0
