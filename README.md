@@ -1,8 +1,6 @@
 # PAY
 PAY = deploymen <b>P</b>alo <b>A</b>lto from <b>Y</b>aml = Palo Alto from Yaml
 
-The idea is to manage the Palo Alto configuration via text files in YAML format. 
-
 PAY is rather the name of the approach, than the name of the software product.
 
 The idea is to manage the PA configuration via text files in YAML format. It allows you to
