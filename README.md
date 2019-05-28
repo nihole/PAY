@@ -21,7 +21,7 @@ And this only means that you need to change the Jinja templates (not just the YA
 - clone this project to your local folder
 - install Python3 with YAML and Jinja2 packages
 
-<h3>Generate configuration</h3>
+<h3>Examples</h3>
 
 Devices: Panorama and  Palo Alto Firewall.
 In these examples we always configure FWs with Panorama templates or device groups except the case of initial configuration. 
@@ -52,7 +52,7 @@ The procedure is simple and mainly consists of three steps:
 
 You never change the Python rendering file <a href="https://github.com/nihole/PAY/blob/master/render.py">render.py</a> and generally you don't need to change Jinja2 templates.
 
-<h3>Example</h3>
+<h3>Details</h3>
 
 <b><em>All steps described here have already been completed. So you don't actually have to do anything, and you can just click the links and view the configuration files.</em></b>
 
