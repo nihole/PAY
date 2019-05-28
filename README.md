@@ -60,7 +60,7 @@ Let's consider, for example, that we want to configure BGP sessions.
 
 1. Go to the correspondent folder. In this case it is  <a href="https://github.com/nihole/PAY/tree/master/template/bgp">bgp</a>
 
-There are 2 files already there: <a href="https://github.com/nihole/ACY/blob/master/access_policies/global_policy/aaep/template.j2">template.j2</a> and <a href="https://github.com/nihole/ACY/blob/master/access_policies/global_policy/aaep/aaep_tmpl.yml">vlan_pools_tmpl.yml</a>.
+There are 2 files already there: <a href="https://github.com/nihole/PAY/blob/master/template/bgp/template.j2">template.j2</a> and <a href="https://github.com/nihole/PAY/blob/master/template/bgp/bgp_tmpl.yml">bgp_tmpl.yml</a>.
 - template.j2 - is Jinja2 template. You usually don't need to change it.
 - bgp_tmpl.yml - this YAML file we are going to use for our YAML file creation (if it has not been done before)
 
