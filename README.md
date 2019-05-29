@@ -10,7 +10,7 @@ The idea is to manage the PA configuration via text files in YAML format. It all
 
 Mostly It might be useful in two cases: 
 
-- you have repeated operations with the same or similar command syntax, but with different parameters. In this case, the syntax can be defined using templates (jinja2), and the parameters are described in configuration files (YAML)
+- you have repetitive operations with the same or similar command syntax, but with different parameters. In this case, the syntax can be defined using templates (jinja2), and the parameters are described in configuration files (YAML)
 - during the implementation stage of the project. This approach permits you to use the best development’s practices of change management based on git and git-like applications
 
 This project should be considered only as a set of examples. Perhaps it will meet your expectations and design, but most likely you will want something else, more or less.
